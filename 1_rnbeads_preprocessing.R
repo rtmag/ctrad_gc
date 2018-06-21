@@ -36,7 +36,7 @@ print(idat.dir)
 	report.dir <- file.path("/home/rtm/ctrad/GC_Illumina02/DNA_Methylation/RnBeads")
 	print(report.dir)
 
-	rnb.options(import.table.separator="\t")
+	rnb.options(import.table.separator=",")
 	data.source <- c(idat.dir, sample.annotation)
 	result <- rnb.run.import(data.source=data.source,data.type="infinium.idat.dir", dir.reports=report.dir)
 	rnb.set.norm <- rnb.execute.normalization(result$rnb.set, method="swan",bgcorr.method="methylumi.noob")
