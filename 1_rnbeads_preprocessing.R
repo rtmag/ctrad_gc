@@ -24,6 +24,8 @@ library(RnBeads)
 # Multiprocess
 num.cores <- 20
 parallel.setup(num.cores)
+
+rnb.options(assembly = "hg38")
 ## prepro
 idat.dir <- file.path("/home/rtm/ctrad/GC_Illumina02/DNA_Methylation/idat_files/")
 print(idat.dir)
@@ -32,7 +34,7 @@ print(idat.dir)
 	print(sample.annotation)
 
         system("rm -r /home/rtm/ctrad/GC_Illumina02/DNA_Methylation/RnBeads")
-        system("mkdir /home/rtm/ctrad/GC_Illumina02/DNA_Methylation/RnBeads")
+        system("mkdir /home/rtm/ctrad/GC_Illuqmina02/DNA_Methylation/RnBeads")
 	report.dir <- file.path("/home/rtm/ctrad/GC_Illumina02/DNA_Methylation/RnBeads")
 	print(report.dir)
 
