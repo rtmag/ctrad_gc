@@ -16,7 +16,7 @@ annotation = cbind(sample,clinical[ix,],Tumor)
 annotation[annotation=="N.A."]=NA
 row.names(annotation) = annotation[,1]
 
-write.csv(annotation,"/home/rtm/ctrad/GC_Illumina02/DNA_Methylation/sample_annotation_edited.csv")
+write.csv(annotation,"/home/rtm/ctrad/GC_Illumina02/DNA_Methylation/sample_annotation_edited.csv",row.names=F)
 ###############################################################################################################################
 # Normalization and pre processing
 library(RnBeads)
