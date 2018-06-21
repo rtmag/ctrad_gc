@@ -1,23 +1,39 @@
-library(RnBeads)
+###############################################################################################################################
+# Annotation parsing
 
-clinical = read.csv("GCF_clinical_data_edit.csv",stringsAsFactors=F)
-sample = read.table("sample_sheet.txt",sep = "\t",header=T,stringsAsFactors=F)
+# 120 matched normal + tumor 450k
+# 50 WES tumor
+
+clinical = read.csv("/home/rtm/ctrad/GC_Illumina02/DNA_Methylation/GCF_clinical_data_edit.csv",stringsAsFactors=F)
+sample = read.table("/home/rtm/ctrad/GC_Illumina02/DNA_Methylation/sample_sheet.txt",sep = "\t",header=T,stringsAsFactors=F)
 sample = sample[,c(1,6,7,4)]
 colnames(sample) = c("Sample_ID","Sentrix_ID","Sentrix_Position","Sample_Plate")
-gsub("-T","",sample[,1])
+sampleNames = gsub("-T","",sample[,1])
 
+ix = match(sampleNames,clinical[,1])
+Tumor = gsub(".+\\-","",sample[,1],perl="T")
+annotation = cbind(sample,clinical[ix,],Tumor)
+annotation[annotation=="N.A."]=NA
+row.names(annotation) = annotation[,1]
+
+write.csv(annotation,"/home/rtm/ctrad/GC_Illumina02/DNA_Methylation/sample_annotation_edited.csv")
+###############################################################################################################################
+# Normalization and pre processing
+library(RnBeads)
 
 # Multiprocess
-num.cores <- 23
+num.cores <- 20
 parallel.setup(num.cores)
 ## prepro
-idat.dir <- file.path("/home/rtm/backup/CSI/CSI-Stephanie_Met450K/Raw_Data")
+idat.dir <- file.path("/home/rtm/ctrad/GC_Illumina02/DNA_Methylation/idat_files/")
 print(idat.dir)
 
-	sample.annotation <- file.path("/home/rtm/backup/CSI/CSI-Stephanie_Met450K/sample_annotation.txt")
+	sample.annotation <- file.path("/home/rtm/ctrad/GC_Illumina02/DNA_Methylation/sample_annotation_edited.csv")
 	print(sample.annotation)
 
-	report.dir <- file.path("/home/rtm/backup/CSI/CSI-Stephanie_Met450K/RnBeads")
+        system("rm -r /home/rtm/ctrad/GC_Illumina02/DNA_Methylation/RnBeads")
+        system("mkdir /home/rtm/ctrad/GC_Illumina02/DNA_Methylation/RnBeads")
+	report.dir <- file.path("/home/rtm/ctrad/GC_Illumina02/DNA_Methylation")
 	print(report.dir)
 
 	rnb.options(import.table.separator="\t")
@@ -25,5 +41,6 @@ print(idat.dir)
 	result <- rnb.run.import(data.source=data.source,data.type="infinium.idat.dir", dir.reports=report.dir)
 	rnb.set.norm <- rnb.execute.normalization(result$rnb.set, method="swan",bgcorr.method="methylumi.noob")
 
-	save.rnb.set(rnb.set.norm,path="/home/rtm/backup/CSI/CSI-Stephanie_Met450K/rnb.set.norm.RData")
+	save.rnb.set(rnb.set.norm,path="/home/rtm/ctrad/GC_Illumina02/DNA_Methylation/rnb.set.norm.RData")
 print("DONE")
+###############################################################################################################################
