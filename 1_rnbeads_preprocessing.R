@@ -33,7 +33,7 @@ print(idat.dir)
 
         system("rm -r /home/rtm/ctrad/GC_Illumina02/DNA_Methylation/RnBeads")
         system("mkdir /home/rtm/ctrad/GC_Illumina02/DNA_Methylation/RnBeads")
-	report.dir <- file.path("/home/rtm/ctrad/GC_Illumina02/DNA_Methylation")
+	report.dir <- file.path("/home/rtm/ctrad/GC_Illumina02/DNA_Methylation/RnBeads")
 	print(report.dir)
 
 	rnb.options(import.table.separator="\t")
