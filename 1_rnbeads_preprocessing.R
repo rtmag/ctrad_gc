@@ -33,7 +33,7 @@ print(idat.dir)
 	sample.annotation <- file.path("/home/rtm/ctrad/GC_Illumina02/DNA_Methylation/sample_annotation_edited.csv")
 	print(sample.annotation)
 
-        system("rm -r /home/rtm/ctrad/GC_Illumina02/DNA_Methylation/RnBeads")
+        system("rm -fr /home/rtm/ctrad/GC_Illumina02/DNA_Methylation/RnBeads")
         system("mkdir /home/rtm/ctrad/GC_Illuqmina02/DNA_Methylation/RnBeads")
 	report.dir <- file.path("/home/rtm/ctrad/GC_Illumina02/DNA_Methylation/RnBeads")
 	print(report.dir)
