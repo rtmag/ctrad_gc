@@ -68,10 +68,11 @@ library(factoextra)
 library(RColorBrewer)
 
 track=colnames(meth.norm.sig)
-track[track=="N"]=1
-track[track=="T"]=2
 track[track=="1"]=3
 track[track=="2"]=3
+track[track=="N"]=1
+track[track=="T"]=2
+
 track=as.numeric(track)
 
 colores=c("#db4e68","#497bd1","#d1c349")
